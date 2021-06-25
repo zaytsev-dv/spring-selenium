@@ -13,23 +13,25 @@ import static com.example.demo.util.CustomWebDriverProvider.WEB_DRIVER_THREAD_LO
 
 @Component
 @Slf4j
-public class CheckAccountETP44 extends CheckAccount {
+public class CheckAccountETP223 extends CheckAccount {
 
     private static final String traderCode = "EETP";
-    private static final String accountType = "44";
-    private static final String url = "https://etp.roseltorg.ru/";
+    private static final String accountType = "223";
 
     @Override
     public void check() {
         WebDriverRunner.setWebDriver(WEB_DRIVER_THREAD_LOCAL.get());
-        open(url);
-        //todo: //add trusted sites after "open"
-        log.trace("{} login...", url);
-        $(By.xpath("//button[span[contains(text(),'Вход через')]]")).click();
+        open("https://msp.roseltorg.ru/");
+        log.trace("{} login...", "https://msp.roseltorg.ru/");
         log.trace("Вход через ЕСИА");
+        $(By.xpath("//span[text()='ГОСУСЛУГИ (ЕРУЗ)']")).click();
         checkESIALogin(traderCode, accountType);
-        wait(By.xpath("//button[text()='Выход']"), Condition.exist);
+        log.trace("user info must be");
+        loginWait(By.cssSelector(".first"), Condition.exist);
+        $(".second").exists();
+        $(".user-inn").exists();
+        $(".third").exists();
         closeESIALoginForm();
-        log.info("check EETP44 is DONE");
+        log.info("check EETP223 is DONE");
     }
 }

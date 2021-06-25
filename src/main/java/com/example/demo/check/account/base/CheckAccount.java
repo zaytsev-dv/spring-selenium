@@ -21,6 +21,32 @@ public abstract class CheckAccount {
 
     public abstract void check();
 
+    protected SelenideElement loginWait(By expected) {
+        return loginWait(expected, Condition.appear);
+    }
+
+    protected SelenideElement loginWait(By expected, Condition condition) {
+        log.trace("wait until {}", expected);
+        return $(expected).waitUntil(condition, 20000);
+    }
+
+    protected void clickWaitClick(By click1, By click2) {
+        for (int i = 0; i <= 5; i++) {
+            try {
+                $(click1).click();
+            } catch (Throwable e) {
+                log.trace("{}: {}", i, e.getMessage());
+            }
+            try {
+                $(click2).waitUntil(Condition.appear, 5000);
+                $(click2).click();
+                break;
+            } catch (Throwable e) {
+                log.trace("{}: {}", i, e.getMessage());
+            }
+        }
+    }
+
     protected void checkESIALogin(String traderCode, String accountType) {
         AtomicInteger countIteration = new AtomicInteger(0);
         boolean displayed = isDisplayed("//body/div[2]/div[2]/div[1]/div[1]/div[1]/form[1]/div[3]/a[1]", traderCode, accountType);
@@ -61,7 +87,7 @@ public abstract class CheckAccount {
     }
 
     private void loginInESIA() {
-        log.info("login to ESIA");
+//        log.info("login to ESIA");
         wait(By.xpath("//body/div[2]/div[2]/div[1]/div[1]/div[1]/form[1]/div[3]/a[1]")).click();
         wait(By.xpath("//span[contains(text(),'Готово')]")).click();
         wait(By.xpath("//body/div[7]/div[2]/form[1]/div[1]/div[1]/div[1]/div[1]/div[1]/span[1]")).click();
@@ -77,7 +103,7 @@ public abstract class CheckAccount {
         return $(expected).waitUntil(condition, 10000);
     }
 
-    protected void closeESIALoginForm() {
+    public void closeESIALoginForm() {
         open("https://esia.gosuslugi.ru/");
         wait(By.xpath("//header/div[1]/div[2]/div[1]/a[2]")).click();
     }

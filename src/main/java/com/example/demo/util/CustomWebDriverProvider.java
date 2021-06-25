@@ -48,7 +48,7 @@ public class CustomWebDriverProvider {
         ChromeOptions options = new ChromeOptions();
 
         //set gost
-//        options.setBinary();
+        options.setBinary(new File(seleniumConfig.getBrowser().getGost()));
 
         options.setAcceptInsecureCerts(true);
         options.setHeadless(false);
