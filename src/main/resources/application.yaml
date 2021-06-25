@@ -1,0 +1,13 @@
+selenide:
+  webdriver: 'chrome.driver=src/main/resources/config/chromedriver'
+  extensions:
+    crypto-pro: 'src/main/resources/config/cryptopro-chrome-extension-for-cades-browser-plug/1.2.7_0.crx'
+    gos-uslugi: 'src/main/resources/config/gosuslugi-chrome-extension-browser-plugin/1.2.6_0.crx'
+  browser:
+    gost: impl me please
+
+check:
+  account:
+    cron: '0 */5 * * * ?'
+  cite:
+    cron: '0 */5 * * * ?'
